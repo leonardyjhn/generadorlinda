@@ -316,4 +316,18 @@ const generateManualBtn = document.getElementById('generateManualBtn');
     if (raffleData.length === 0 && !isManualMode) {
         // Puedes agregar algunos datos de ejemplo aquí si lo deseas
     }
+
+// Registrar Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registrado con éxito');
+      })
+      .catch(err => {
+        console.log('Error al registrar ServiceWorker:', err);
+      });
+  });
+}
+
 });
