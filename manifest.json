@@ -1,10 +1,17 @@
 {
   "name": "Generador de Cuadrículas para Rifas",
   "short_name": "Generador Rifas",
-  "start_url": "index.html",
+  "description": "Aplicación para generar y visualizar números de rifas",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f5f5f5",
   "theme_color": "#3498db",
+  "orientation": "portrait",
+  "launch_handler": {
+    "client_mode": "auto"
+  },
   "icons": [
     {
       "src": "icon-192.png",
