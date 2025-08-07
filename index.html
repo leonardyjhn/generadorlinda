@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Cuadrículas para Rifas</title>
+    <link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3498db">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Cuadrículas para Rifas</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h2>Opciones de Fuente</h2>
+                <label>Tamaño de fuente:
+                    <input type="number" id="fontSize" value="16" min="8" max="72">
+                </label>
+                <label>Color de fuente:
+                    <input type="color" id="fontColor" value="#000000">
+                </label>
+            </div>
+            
+            <div class="control-group">
+                <h2>Opciones de Cuadrícula</h2>
+                <label>Número de columnas:
+                    <input type="number" id="columns" value="10" min="1" max="50">
+                </label>
+                <label>Tamaño de celda (px):
+                    <input type="number" id="cellSize" value="50" min="20" max="200">
+                </label>
+                <label>Color de fondo disponible:
+                    <input type="color" id="availableColor" value="#ffffff">
+                </label>
+                <label>Color de fondo apartado:
+                    <input type="color" id="reservedColor" value="#ffff00">
+                </label>
+                <label>Color de fondo pagado:
+                    <input type="color" id="paidColor" value="#00ff00">
+                </label>
+                <label>Color de borde:
+                    <input type="color" id="borderColor" value="#000000">
+                </label>
+                <label>Grosor de borde (px):
+                    <input type="number" id="borderWidth" value="1" min="0" max="10">
+                </label>
+            </div>
+            
+            <div class="control-group">
+                <h2>Mostrar Números</h2>
+                <label><input type="checkbox" id="showAvailable" checked> Disponibles</label>
+                <label><input type="checkbox" id="showReserved" checked> Apartados</label>
+                <label><input type="checkbox" id="showPaid" checked> Pagados</label>
+            </div>
+            
+            <div class="control-group">
+                <h2>Título e Imagen</h2>
+                <label>Título:
+                    <input type="text" id="titleText" placeholder="Ingrese el título aquí" value="Rifa Benefica">
+                </label>
+                <label>Tamaño de fuente del título:
+                    <input type="number" id="titleFontSize" value="24" min="8" max="72">
+                </label>
+                <label>Color del título:
+                    <input type="color" id="titleColor" value="#000000">
+                </label>
+                <label>Imagen del negocio (URL o arrastre):
+                    <input type="file" id="businessImage" accept="image/*">
+                </label>
+                <label>Ancho de imagen (px):
+                    <input type="number" id="imageWidth" value="300" min="50" max="1000">
+                </label>
+                <label>Altura de imagen (px):
+                    <input type="number" id="imageHeight" value="200" min="50" max="1000">
+                </label>
+            </div>
+            
+            <div class="control-group">
+                <h2>Cargar Datos</h2>
+                <div class="drop-area" id="dropArea">
+                    <p>Arrastre archivo CSV aquí o</p>
+                    <input type="file" id="fileInput" accept=".csv">
+                </div>
+                <button id="generateBtn">Generar Cuadrícula</button>
+                <button id="downloadBtn">Descargar Imagen</button>
+                <button id="manualModeBtn">Modo Manual</button>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <div id="preview">
+                <!-- Aquí se generará la cuadrícula -->
+                <p>La vista previa aparecerá aquí después de generar la cuadrícula.</p>
+            </div>
+        </div>
+        
+        <div id="manualControls" class="manual-controls" style="display: none;">
+    <h2>Modo Manual</h2>
+    <div class="manual-input">
+        <label>Cantidad total de números:
+            <input type="number" id="totalNumbers" min="1" max="999" value="100">
+        </label>
+        <label>Números apartados/pagados (separados por comas, espacios o puntos):
+            <input type="text" id="reservedNumbers" placeholder="Ej: 1,5,10,15">
+        </label>
+        <label>Estado para estos números:
+            <select id="manualStatus">
+                <option value="apartado">Apartado</option>
+                <option value="pagado">Pagado</option>
+            </select>
+        </label>
+        <button id="generateManualBtn">Generar Cuadrícula</button>
+    </div>
+</div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.control-group {
+    flex: 1;
+    min-width: 250px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.control-group h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #2c3e50;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="number"], input[type="text"], input[type="color"], select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px 0;
+    transition: border 0.3s;
+}
+
+.drop-area.highlight {
+    border-color: #3498db;
+    background-color: #f0f8ff;
+}
+
+.preview-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+#preview {
+    display: inline-block;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.grid {
+    display: grid;
+    gap: 1px;
+    margin: 0 auto;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-style: solid;
+}
+
+.business-image {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.title {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.manual-controls {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.manual-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.manual-input label {
+    flex: 1;
+    min-width: 120px;
+}
+
+.manual-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.manual-number {
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.manual-number button {
+    background-color: #e74c3c;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.manual-number button:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+    }
+    
+    .control-group {
+        width: 100%;
+    }
+}
