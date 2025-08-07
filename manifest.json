@@ -2,9 +2,9 @@
   "name": "Generador de Cuadrículas para Rifas",
   "short_name": "Generador Rifas",
   "description": "Aplicación para generar y visualizar números de rifas",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
+  "id": "/generadorlinda/",
+  "start_url": "/generadorlinda/",
+  "scope": "/generadorlinda/",
   "display": "standalone",
   "background_color": "#f5f5f5",
   "theme_color": "#3498db",
@@ -14,25 +14,25 @@
   },
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/generadorlinda/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "/generadorlinda/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-maskable-192.png",
+      "src": "/generadorlinda/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icon-maskable-512.png",
+      "src": "/generadorlinda/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
