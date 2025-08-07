@@ -1,11 +1,11 @@
 const CACHE_NAME = 'rifa-generator-v1';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/generadorlinda/',
+  '/generadorlinda/index.html',
+  '/generadorlinda/style.css',
+  '/generadorlinda/script.js',
+  '/generadorlinda/icon-192.png',
+  '/generadorlinda/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
