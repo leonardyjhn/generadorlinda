@@ -96,27 +96,32 @@ const generateManualBtn = document.getElementById('generateManualBtn');
     }
     
     function processCSV(csv) {
-        const lines = csv.split('\n');
-        raffleData = [];
+    const lines = csv.split('\n');
+    raffleData = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '') continue;
         
-        for (let i = 1; i < lines.length; i++) {
-            if (lines[i].trim() === '') continue;
+        const parts = lines[i].split(',');
+        if (parts.length >= 2) {
+            const number = parts[0].trim();
+            let status = parts[1].trim().toLowerCase();
             
-            const parts = lines[i].split(',');
-            if (parts.length >= 2) {
-                const number = parts[0].trim();
-                const status = parts[1].trim().toLowerCase();
-                
-                if (['disponible', 'apartado', 'pagado'].includes(status)) {
-                    raffleData.push({ number, status });
-                }
+            // Convertir "abonado" a "apartado"
+            if (status === 'abonado') {
+                status = 'apartado';
+            }
+            
+            if (['disponible', 'apartado', 'pagado'].includes(status)) {
+                raffleData.push({ number, status });
             }
         }
-        
-        if (!isManualMode) {
-            generateGrid();
-        }
     }
+    
+    if (!isManualMode) {
+        generateGrid();
+    }
+}
     
     // Generar la cuadrícula
     function generateGrid() {
@@ -256,7 +261,12 @@ const generateManualBtn = document.getElementById('generateManualBtn');
     function generateManualGrid() {
     const totalNumbers = parseInt(totalNumbersInput.value);
     const reservedNumbersText = reservedNumbersInput.value;
-    const status = manualStatusInput.value;
+    let status = manualStatusInput.value;
+    
+    // Convertir "abonado" a "apartado" también en modo manual
+    if (status === 'abonado') {
+        status = 'apartado';
+    }
     
     if (isNaN(totalNumbers) || totalNumbers < 1) {
         alert('Ingrese una cantidad válida de números');
