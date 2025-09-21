@@ -277,10 +277,10 @@ const generateManualBtn = document.getElementById('generateManualBtn');
     manualData = [];
     
     // Generar todos los números disponibles primero
-    for (let i = 1; i <= totalNumbers; i++) {
-        const number = i.toString().padStart(3, '0');
-        manualData.push({ number, status: 'disponible' });
-    }
+    for (let i = 0; i < totalNumbers; i++) {
+    const number = i.toString().padStart(3, '0');
+    manualData.push({ number, status: 'disponible' });
+}
     
     // Procesar números apartados/pagados
     if (reservedNumbersText.trim() !== '') {
@@ -341,3 +341,4 @@ if ('serviceWorker' in navigator) {
 }
 
 });
+
