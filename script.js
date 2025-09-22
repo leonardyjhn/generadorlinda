@@ -321,6 +321,8 @@ function createCell(item, cellWidth, cellHeight, fontSize, fontColor, borderColo
     cell.style.color = fontColor;
     cell.style.borderColor = borderColor;
     cell.style.borderWidth = `${borderWidth}px`;
+cell.style.borderStyle = 'solid';
+cell.style.boxSizing = 'border-box'; /* ← IMPORTANTE */
     
     // Establecer color de fondo según el estado
     if (item.status === 'disponible') {
@@ -515,4 +517,5 @@ if ('serviceWorker' in navigator) {
 }
 
 });
+
 
