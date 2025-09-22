@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById('generateBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const manualModeBtn = document.getElementById('manualModeBtn');
+    // Nuevos elementos para división
+const splitGridCheckbox = document.getElementById('splitGrid');
+const downloadSplitBtn = document.getElementById('downloadSplitBtn');
     const manualControls = document.getElementById('manualControls');
     const preview = document.getElementById('preview');
     
@@ -13,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const fontColorInput = document.getElementById('fontColor');
     const columnsInput = document.getElementById('columns');
     const cellSizeInput = document.getElementById('cellSize');
+    const cellWidthInput = document.getElementById('cellWidth');
+const cellHeightInput = document.getElementById('cellHeight')
     const availableColorInput = document.getElementById('availableColor');
     const reservedColorInput = document.getElementById('reservedColor');
     const paidColorInput = document.getElementById('paidColor');
@@ -124,126 +129,291 @@ const generateManualBtn = document.getElementById('generateManualBtn');
 }
     
     // Generar la cuadrícula
-    function generateGrid() {
-        // Limpiar vista previa
-        preview.innerHTML = '';
-        
-        // Obtener configuraciones
-        const fontSize = parseInt(fontSizeInput.value);
-        const fontColor = fontColorInput.value;
-        const columns = parseInt(columnsInput.value);
-        const cellSize = parseInt(cellSizeInput.value);
-        const availableColor = availableColorInput.value;
-        const reservedColor = reservedColorInput.value;
-        const paidColor = paidColorInput.value;
-        const borderColor = borderColorInput.value;
-        const borderWidth = parseInt(borderWidthInput.value);
-        const showAvailable = showAvailableInput.checked;
-        const showReserved = showReservedInput.checked;
-        const showPaid = showPaidInput.checked;
-        const titleText = titleTextInput.value;
-        const titleFontSize = parseInt(titleFontSizeInput.value);
-        const titleColor = titleColorInput.value;
-        
-        // Filtrar datos según lo que se debe mostrar
-        const dataToShow = isManualMode ? manualData : raffleData;
-        const filteredData = dataToShow.filter(item => {
-            if (item.status === 'disponible' && showAvailable) return true;
-            if (item.status === 'apartado' && showReserved) return true;
-            if (item.status === 'pagado' && showPaid) return true;
-            return false;
-        });
-        
-        // Ordenar los números
-        filteredData.sort((a, b) => parseInt(a.number) - parseInt(b.number));
-        
-        // Crear contenedor para la imagen, título y cuadrícula
-        const container = document.createElement('div');
-        container.style.display = 'inline-block';
-        container.style.textAlign = 'center';
-        
-        // Agregar imagen del negocio si existe
-        if (businessImageInput.files.length > 0) {
-    const imageUrl = URL.createObjectURL(businessImageInput.files[0]);
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = 'Imagen del negocio';
-    img.className = 'business-image';
+function generateGrid() {
+    // Limpiar vista previa
+    preview.innerHTML = '';
     
-    // Solo establece el ancho, la altura se ajustará automáticamente
-    img.style.width = `${imageWidthInput.value}px`;
-    img.style.height = 'auto'; // Mantiene la proporción
+    // Obtener configuraciones
+    const fontSize = parseInt(fontSizeInput.value);
+    const fontColor = fontColorInput.value;
+    const columns = parseInt(columnsInput.value);
+    const cellWidth = parseInt(cellWidthInput.value);
+    const cellHeight = parseInt(cellHeightInput.value);
+    const availableColor = availableColorInput.value;
+    const reservedColor = reservedColorInput.value;
+    const paidColor = paidColorInput.value;
+    const borderColor = borderColorInput.value;
+    const borderWidth = parseInt(borderWidthInput.value);
+    const showAvailable = showAvailableInput.checked;
+    const showReserved = showReservedInput.checked;
+    const showPaid = showPaidInput.checked;
+    const titleText = titleTextInput.value;
+    const titleFontSize = parseInt(titleFontSizeInput.value);
+    const titleColor = titleColorInput.value;
+    const splitGrid = splitGridCheckbox.checked;
     
-    container.appendChild(img);
+    // Mostrar/ocultar botón de descarga dividida
+    downloadSplitBtn.style.display = splitGrid ? 'inline-block' : 'none';
+    downloadBtn.textContent = splitGrid ? 'Descargar Imagen Completa' : 'Descargar Imagen';
+    
+    // Filtrar datos según lo que se debe mostrar
+    const dataToShow = isManualMode ? manualData : raffleData;
+    const filteredData = dataToShow.filter(item => {
+        if (item.status === 'disponible' && showAvailable) return true;
+        if (item.status === 'apartado' && showReserved) return true;
+        if (item.status === 'pagado' && showPaid) return true;
+        return false;
+    });
+    
+    // Ordenar los números
+    filteredData.sort((a, b) => parseInt(a.number) - parseInt(b.number));
+    
+    if (splitGrid) {
+    generateSplitGrid(filteredData, fontSize, fontColor, columns, cellWidth, cellHeight, 
+                     availableColor, reservedColor, paidColor, borderColor, 
+                     borderWidth, titleText, titleFontSize, titleColor);
+} else {
+    generateSingleGrid(filteredData, fontSize, fontColor, columns, cellWidth, cellHeight, 
+                      availableColor, reservedColor, paidColor, borderColor, 
+                      borderWidth, titleText, titleFontSize, titleColor);
 }
-        
-        // Agregar título
-        if (titleText) {
-            const title = document.createElement('h2');
-            title.className = 'title';
-            title.textContent = titleText;
-            title.style.fontSize = `${titleFontSize}px`;
-            title.style.color = titleColor;
-            container.appendChild(title);
-        }
-        
-        // Crear cuadrícula
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-        grid.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
-        
-        // Llenar la cuadrícula con celdas
-        filteredData.forEach(item => {
-            const cell = document.createElement('div');
-            cell.className = 'cell';
-            cell.textContent = item.number;
-            cell.style.width = `${cellSize}px`;
-            cell.style.height = `${cellSize}px`;
-            cell.style.fontSize = `${fontSize}px`;
-            cell.style.color = fontColor;
-            cell.style.borderColor = borderColor;
-            cell.style.borderWidth = `${borderWidth}px`;
-            
-            // Establecer color de fondo según el estado
-            if (item.status === 'disponible') {
-                cell.style.backgroundColor = availableColor;
-            } else if (item.status === 'apartado') {
-                cell.style.backgroundColor = reservedColor;
-            } else if (item.status === 'pagado') {
-                cell.style.backgroundColor = paidColor;
-            }
-            
-            grid.appendChild(cell);
-        });
-        
-        container.appendChild(grid);
-        preview.appendChild(container);
+}
+
+// Generar cuadrícula única (comportamiento original)
+function generateSingleGrid(data, fontSize, fontColor, columns, cellWidth, cellHeight, 
+                           availableColor, reservedColor, paidColor, borderColor, 
+                           borderWidth, titleText, titleFontSize, titleColor) {
+    // Crear contenedor para la imagen, título y cuadrícula
+    const container = document.createElement('div');
+    container.style.display = 'inline-block';
+    container.style.textAlign = 'center';
+    
+    // Agregar imagen del negocio si existe
+    if (businessImageInput.files.length > 0) {
+        const imageUrl = URL.createObjectURL(businessImageInput.files[0]);
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = 'Imagen del negocio';
+        img.className = 'business-image';
+        img.style.width = `${imageWidthInput.value}px`;
+        img.style.height = 'auto';
+        container.appendChild(img);
     }
     
+    // Agregar título
+    if (titleText) {
+        const title = document.createElement('h2');
+        title.className = 'title';
+        title.textContent = titleText;
+        title.style.fontSize = `${titleFontSize}px`;
+        title.style.color = titleColor;
+        container.appendChild(title);
+    }
+    
+    // Crear cuadrícula
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    grid.style.gridTemplateColumns = `repeat(${columns}, ${cellWidth}px)`;
+    
+    // Llenar la cuadrícula con celdas
+    data.forEach(item => {
+        const cell = createCell(item, cellWidth, cellHeight, fontSize, fontColor, borderColor, borderWidth, 
+                       availableColor, reservedColor, paidColor);
+        grid.appendChild(cell);
+    });
+    
+    container.appendChild(grid);
+    preview.appendChild(container);
+}
+
+// Generar cuadrícula dividida
+function generateSplitGrid(data, fontSize, fontColor, columns, cellSize, 
+                          availableColor, reservedColor, paidColor, borderColor, 
+                          borderWidth, titleText, titleFontSize, titleColor) {
+    // Dividir datos en dos grupos: 000-499 y 500-999
+    const firstHalf = data.filter(item => parseInt(item.number) < 500);
+    const secondHalf = data.filter(item => parseInt(item.number) >= 500);
+    
+    // Crear contenedor principal para ambas cuadrículas
+    const splitContainer = document.createElement('div');
+    splitContainer.className = 'split-preview';
+    
+    // Generar primera mitad (000-499)
+    if (firstHalf.length > 0) {
+        const firstGridContainer = createSplitGridContainer(
+            firstHalf, 'Números 000 - 499', fontSize, fontColor, columns, cellSize,
+            availableColor, reservedColor, paidColor, borderColor, borderWidth,
+            titleText, titleFontSize, titleColor
+        );
+        splitContainer.appendChild(firstGridContainer);
+    }
+    
+    // Generar segunda mitad (500-999)
+    if (secondHalf.length > 0) {
+        const secondGridContainer = createSplitGridContainer(
+            secondHalf, 'Números 500 - 999', fontSize, fontColor, columns, cellSize,
+            availableColor, reservedColor, paidColor, borderColor, borderWidth,
+            titleText, titleFontSize, titleColor
+        );
+        splitContainer.appendChild(secondGridContainer);
+    }
+    
+    preview.appendChild(splitContainer);
+}
+
+// Crear contenedor para cada cuadrícula dividida
+function createSplitGridContainer(data, rangeTitle, fontSize, fontColor, columns, cellSize,
+                                 availableColor, reservedColor, paidColor, borderColor,
+                                 borderWidth, titleText, titleFontSize, titleColor) {
+    const container = document.createElement('div');
+    container.className = 'split-container';
+    
+    // Agregar imagen del negocio si existe (más pequeña para división)
+    if (businessImageInput.files.length > 0) {
+        const imageUrl = URL.createObjectURL(businessImageInput.files[0]);
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = 'Imagen del negocio';
+        img.className = 'business-image';
+        img.style.width = `${parseInt(imageWidthInput.value) * 0.7}px`; // 70% del tamaño original
+        img.style.height = 'auto';
+        container.appendChild(img);
+    }
+    
+    // Agregar título principal
+    if (titleText) {
+        const title = document.createElement('h2');
+        title.className = 'title';
+        title.textContent = titleText;
+        title.style.fontSize = `${titleFontSize * 0.8}px`; // 80% del tamaño original
+        title.style.color = titleColor;
+        container.appendChild(title);
+    }
+    
+    // QUITAMOS EL TÍTULO DEL RANGO (000-499 y 500-999)
+    // Esta parte se eliminó para quitar el espacio extra
+    
+    // Crear cuadrícula
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    grid.style.gridTemplateColumns = `repeat(${columns}, ${cellWidth}px)`;
+    
+    // Llenar la cuadrícula con celdas
+    data.forEach(item => {
+        const cell = createCell(item, cellWidth, cellHeight, fontSize, fontColor, borderColor, borderWidth,
+                       availableColor, reservedColor, paidColor);
+        grid.appendChild(cell);
+    });
+    
+    container.appendChild(grid);
+    return container;
+}
+
+// Función auxiliar para crear celdas
+function createCell(item, cellWidth, cellHeight, fontSize, fontColor, borderColor, borderWidth,
+                   availableColor, reservedColor, paidColor) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.textContent = item.number;
+    cell.style.width = `${cellWidth}px`;
+    cell.style.height = `${cellHeight}px`;
+    cell.style.fontSize = `${fontSize}px`;
+    cell.style.color = fontColor;
+    cell.style.borderColor = borderColor;
+    cell.style.borderWidth = `${borderWidth}px`;
+    
+    // Establecer color de fondo según el estado
+    if (item.status === 'disponible') {
+        cell.style.backgroundColor = availableColor;
+    } else if (item.status === 'apartado') {
+        cell.style.backgroundColor = reservedColor;
+    } else if (item.status === 'pagado') {
+        cell.style.backgroundColor = paidColor;
+    }
+    
+    return cell;
+}
+    
     // Descargar la imagen
-    function downloadImage() {
-        if (preview.children.length === 0) {
-            alert('Primero genera una cuadrícula');
-            return;
-        }
-        
-        // Usamos html2canvas para convertir el HTML a imagen
-        const container = preview.querySelector('div');
-        
+function downloadImage() {
+    if (preview.children.length === 0) {
+        alert('Primero genera una cuadrícula');
+        return;
+    }
+    
+    const splitGrid = splitGridCheckbox.checked;
+    
+    if (splitGrid) {
+        downloadCompleteGrid();
+    } else {
+        downloadSingleImage();
+    }
+}
+
+// Descargar imagen única
+function downloadSingleImage() {
+    const container = preview.querySelector('div');
+    
+    html2canvas(container, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        width: container.offsetWidth,
+        height: container.offsetHeight
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'rifa_completa.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// Descargar cuadrícula completa (cuando está dividida)
+function downloadCompleteGrid() {
+    html2canvas(preview, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'rifa_completa.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// Descargar imágenes divididas
+function downloadSplitImages() {
+    if (!splitGridCheckbox.checked) {
+        alert('Active la opción "Dividir cuadrícula" primero');
+        return;
+    }
+    
+    const splitContainers = preview.querySelectorAll('.split-container');
+    
+    if (splitContainers.length === 0) {
+        alert('Primero genera una cuadrícula dividida');
+        return;
+    }
+    
+    // Descargar cada contenedor individualmente
+    splitContainers.forEach((container, index) => {
         html2canvas(container, {
-            scale: 2, // Mayor calidad
+            scale: 2,
             logging: false,
             useCORS: true,
-            allowTaint: true,
-            width: container.offsetWidth,
-            height: container.offsetHeight
+            allowTaint: true
         }).then(canvas => {
             const link = document.createElement('a');
-            link.download = 'rifa.png';
+            const range = index === 0 ? '000-499' : '500-999';
+            link.download = `rifa_${range}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
-    }
+    });
+}
     
     // Modo manual
     function toggleManualMode() {
@@ -307,20 +477,24 @@ const generateManualBtn = document.getElementById('generateManualBtn');
     generateBtn.addEventListener('click', generateGrid);
     downloadBtn.addEventListener('click', downloadImage);
     manualModeBtn.addEventListener('click', toggleManualMode);
+    downloadSplitBtn.addEventListener('click', downloadSplitImages);
+
+// Event listener para el checkbox de división
+splitGridCheckbox.addEventListener('change', generateGrid);
     generateManualBtn.addEventListener('click', generateManualGrid);
     clearAllBtn.addEventListener('click', clearAllManualNumbers);
     
     // Event listeners para regenerar la cuadrícula cuando cambian los parámetros
     [
-        fontSizeInput, fontColorInput, columnsInput, cellSizeInput,
-        availableColorInput, reservedColorInput, paidColorInput,
-        borderColorInput, borderWidthInput, showAvailableInput,
-        showReservedInput, showPaidInput, titleTextInput,
-        titleFontSizeInput, titleColorInput, businessImageInput,
-        imageWidthInput, imageHeightInput
-    ].forEach(input => {
-        input.addEventListener('change', generateGrid);
-    });
+    fontSizeInput, fontColorInput, columnsInput, cellWidthInput, cellHeightInput,
+    availableColorInput, reservedColorInput, paidColorInput,
+    borderColorInput, borderWidthInput, showAvailableInput,
+    showReservedInput, showPaidInput, titleTextInput,
+    titleFontSizeInput, titleColorInput, businessImageInput,
+    imageWidthInput, imageHeightInput, splitGridCheckbox
+].forEach(input => {
+    input.addEventListener('change', generateGrid);
+});
     
     // Inicializar con algunos datos de ejemplo si no hay CSV cargado
     if (raffleData.length === 0 && !isManualMode) {
