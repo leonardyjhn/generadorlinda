@@ -111,17 +111,7 @@ button:hover {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    border-right: 1px solid;
-    border-bottom: 1px solid;
-}
-
-/* Agregar borde izquierdo a la primera columna y superior a la primera fila */
-.grid :nth-child(1) {
-    border-left: 1px solid;
-}
-
-.grid :nth-child(-n+10) {  /* Ajusta el número según tus columnas */
-    border-top: 1px solid;
+    border-style: solid;
 }
 
 .business-image {
@@ -192,4 +182,5 @@ button:hover {
     }
 
 }
+
 
