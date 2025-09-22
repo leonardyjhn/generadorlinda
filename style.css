@@ -111,7 +111,10 @@ button:hover {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    border-style: solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-top: none;
+    border-left: none;
 }
 
 .business-image {
@@ -180,4 +183,5 @@ button:hover {
     .control-group {
         width: 100%;
     }
+
 }
