@@ -28,13 +28,16 @@
             </div>
             
             <div class="control-group">
-                <h2>Opciones de Cuadrícula</h2>
-                <label>Número de columnas:
-                    <input type="number" id="columns" value="10" min="1" max="50">
-                </label>
-                <label>Tamaño de celda (px):
-                    <input type="number" id="cellSize" value="50" min="20" max="200">
-                </label>
+    <h2>Opciones de Cuadrícula</h2>
+    <label>Número de columnas:
+        <input type="number" id="columns" value="10" min="1" max="50">
+    </label>
+    <label>Ancho de celda (px):
+        <input type="number" id="cellWidth" value="50" min="20" max="200">
+    </label>
+    <label>Alto de celda (px):
+        <input type="number" id="cellHeight" value="50" min="20" max="200">
+    </label>
                 <label>Color de fondo disponible:
                     <input type="color" id="availableColor" value="#ffffff">
                 </label>
@@ -82,16 +85,22 @@
             </div>
             
             <div class="control-group">
-                <h2>Cargar Datos</h2>
-                <div class="drop-area" id="dropArea">
-                    <p>Arrastre archivo CSV aquí o</p>
-                    <input type="file" id="fileInput" accept=".csv">
-                </div>
-                <button id="generateBtn">Generar Cuadrícula</button>
-                <button id="downloadBtn">Descargar Imagen</button>
-                <button id="manualModeBtn">Modo Manual</button>
-            </div>
-        </div>
+    <h2>Cargar Datos</h2>
+    <div class="drop-area" id="dropArea">
+        <p>Arrastre archivo CSV aquí o</p>
+        <input type="file" id="fileInput" accept=".csv">
+    </div>
+    
+    <h3>Opciones de División</h3>
+    <label>
+        <input type="checkbox" id="splitGrid" value="split"> Dividir cuadrícula en dos partes (000-499 y 500-999)
+    </label>
+    
+    <button id="generateBtn">Generar Cuadrícula</button>
+    <button id="downloadBtn">Descargar Imagen Completa</button>
+    <button id="downloadSplitBtn" style="display: none;">Descargar Imágenes Divididas</button>
+    <button id="manualModeBtn">Modo Manual</button>
+</div>
         
         <div class="preview-container">
             <div id="preview">
