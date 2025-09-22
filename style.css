@@ -102,8 +102,9 @@ button:hover {
 
 .grid {
     display: grid;
-    gap: 1px;
+    gap: 0;  /* ← CAMBIA de 1px a 0 */
     margin: 0 auto;
+    border: 1px solid #ddd; /* ← Agrega borde exterior */
 }
 
 .cell {
@@ -112,6 +113,17 @@ button:hover {
     justify-content: center;
     font-weight: bold;
     border-style: solid;
+    border-width: 0 1px 1px 0; /* ← Bordes solo derecha e inferior */
+}
+
+/* Para la última fila - quitar borde inferior */
+.cell:nth-last-child(-n+10) { /* Ajusta el número según columnas */
+    border-bottom-width: 0;
+}
+
+/* Para la última columna - quitar borde derecho */
+.cell:nth-child(10n) { /* Ajusta según número de columnas */
+    border-right-width: 0;
 }
 
 .business-image {
@@ -182,5 +194,6 @@ button:hover {
     }
 
 }
+
 
 
