@@ -227,7 +227,7 @@ function generateSingleGrid(data, fontSize, fontColor, columns, cellWidth, cellH
 }
 
 // Generar cuadrícula dividida
-function generateSplitGrid(data, fontSize, fontColor, columns, cellSize, 
+function generateSplitGrid(data, fontSize, fontColor, columns, cellWidth, cellHeight, 
                           availableColor, reservedColor, paidColor, borderColor, 
                           borderWidth, titleText, titleFontSize, titleColor) {
     // Dividir datos en dos grupos: 000-499 y 500-999
@@ -241,7 +241,7 @@ function generateSplitGrid(data, fontSize, fontColor, columns, cellSize,
     // Generar primera mitad (000-499)
     if (firstHalf.length > 0) {
         const firstGridContainer = createSplitGridContainer(
-            firstHalf, 'Números 000 - 499', fontSize, fontColor, columns, cellSize,
+            firstHalf, 'Números 000 - 499', fontSize, fontColor, columns, cellWidth, cellHeight,
             availableColor, reservedColor, paidColor, borderColor, borderWidth,
             titleText, titleFontSize, titleColor
         );
@@ -251,7 +251,7 @@ function generateSplitGrid(data, fontSize, fontColor, columns, cellSize,
     // Generar segunda mitad (500-999)
     if (secondHalf.length > 0) {
         const secondGridContainer = createSplitGridContainer(
-            secondHalf, 'Números 500 - 999', fontSize, fontColor, columns, cellSize,
+            secondHalf, 'Números 500 - 999', fontSize, fontColor, columns, cellWidth, cellHeight,
             availableColor, reservedColor, paidColor, borderColor, borderWidth,
             titleText, titleFontSize, titleColor
         );
@@ -262,7 +262,7 @@ function generateSplitGrid(data, fontSize, fontColor, columns, cellSize,
 }
 
 // Crear contenedor para cada cuadrícula dividida
-function createSplitGridContainer(data, rangeTitle, fontSize, fontColor, columns, cellSize,
+function createSplitGridContainer(data, rangeTitle, fontSize, fontColor, columns, cellWidth, cellHeight,
                                  availableColor, reservedColor, paidColor, borderColor,
                                  borderWidth, titleText, titleFontSize, titleColor) {
     const container = document.createElement('div');
